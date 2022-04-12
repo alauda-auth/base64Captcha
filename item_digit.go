@@ -75,7 +75,8 @@ func (m *ItemDigit) calculateSizes(width, height, ncount int) {
 	h := float64(height - border*2)
 	// fw takes into account 1-dot spacing between digits.
 	fw := float64(digitFontWidth + 1)
-	fh := float64(digitFontHeight)
+	rh := randIntRange(digitFontWidth, digitFontHeight)
+	fh := float64(rh)
 	nc := float64(ncount)
 	// Calculate the width of a single digit taking into account only the
 	// width of the image.
