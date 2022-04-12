@@ -170,7 +170,8 @@ func (m *ItemDigit) drawDigit(digit []byte, x, y int) {
 	xs := float64(x)
 	r := m.dotSize / 2
 	y += randIntRange(-r, r)
-	for yo := 0; yo < digitFontHeight; yo++ {
+	rh := randIntRange(digitFontWidth, digitFontHeight)
+	for yo := 0; yo < rh; yo++ {
 		for xo := 0; xo < digitFontWidth; xo++ {
 			if digit[yo*digitFontWidth+xo] != digitFontBlackChar {
 				continue
