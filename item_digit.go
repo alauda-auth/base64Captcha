@@ -163,12 +163,21 @@ func (m *ItemDigit) drawDigit(digit []byte, x, y int) {
 	xs := float64(x)
 	r := m.dotSize / 2
 	y += randIntRange(-r, r)
+	diff := randIntRange(-3, 4)
 	for yo := 0; yo < digitFontHeight; yo++ {
 		for xo := 0; xo < digitFontWidth; xo++ {
 			if digit[yo*digitFontWidth+xo] != digitFontBlackChar {
 				continue
 			}
-			m.drawCircle(x+xo*m.dotSize, y+yo*m.dotSize, r, 1)
+			txo := xo - diff
+			if txo < 0 {
+				txo = 0
+			}
+			tyo := yo - diff
+			if tyo < 0 {
+				tyo = 0
+			}
+			m.drawCircle(x+txo*m.dotSize, y+tyo*m.dotSize, r, 1)
 		}
 		xs += skf
 		x = int(xs)
