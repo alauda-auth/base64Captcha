@@ -75,8 +75,7 @@ func (m *ItemDigit) calculateSizes(width, height, ncount int) {
 	h := float64(height - border*2)
 	// fw takes into account 1-dot spacing between digits.
 	fw := float64(digitFontWidth + 1)
-	rh := randIntRange(digitFontWidth, digitFontHeight)
-	fh := float64(rh)
+	fh := float64(digitFontHeight)
 	nc := float64(ncount)
 	// Calculate the width of a single digit taking into account only the
 	// width of the image.
@@ -170,13 +169,33 @@ func (m *ItemDigit) drawDigit(digit []byte, x, y int) {
 	xs := float64(x)
 	r := m.dotSize / 2
 	y += randIntRange(-r, r)
-	rh := randIntRange(digitFontWidth, digitFontHeight)
-	for yo := 0; yo < rh; yo++ {
+	diff := randIntRange(-3, 4)
+	//per := randIntRange(80, 100) /100
+
+	//fmt.Printf("drawDigit: diff:%v\n", diff)
+	//rh := randIntRange(digitFontWidth, digitFontHeight)
+	for yo := 0; yo < digitFontHeight; yo++ {
 		for xo := 0; xo < digitFontWidth; xo++ {
 			if digit[yo*digitFontWidth+xo] != digitFontBlackChar {
 				continue
 			}
-			m.drawCircle(x+xo*m.dotSize, y+yo*m.dotSize, r, 1)
+
+			//fmt.Printf("drawDigit: xo:%v yo:%v\n", xo, yo)
+			txo := xo - diff
+			if txo < 0 {
+				txo = 0
+			}
+			tyo := yo - diff
+			if tyo < 0 {
+				tyo = 0
+			}
+
+			//fmt.Printf("drawDigit: txo:%v tyo:%v m.dotSize: %v \n", txo, tyo, m.dotSize)
+
+			xx := x+txo*m.dotSize
+			yy := y+tyo*m.dotSize
+			m.drawCircle(xx, yy, r, 1)
+			//m.drawCircle(x+txo*m.dotSize, y+tyo*m.dotSize, r, 1)
 		}
 		xs += skf
 		x = int(xs)

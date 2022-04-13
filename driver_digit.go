@@ -14,7 +14,9 @@
 
 package base64Captcha
 
-import "math/rand"
+import (
+	"math/rand"
+)
 
 //DriverDigit config for captcha-engine-digit.
 type DriverDigit struct {
@@ -53,6 +55,8 @@ func (d *DriverDigit) DrawCaptcha(content string) (item Item, err error) {
 	//parse digits to string
 	digits := stringToFakeByte(content)
 
+	//fmt.Printf("DriverDigit: %+v digits: %v\n", d, digits)
+
 	itemDigit.calculateSizes(d.Width, d.Height, len(digits))
 	// Randomly position captcha inside the image.
 	maxx := d.Width - (itemDigit.width+itemDigit.dotSize)*len(digits) - itemDigit.dotSize
@@ -65,6 +69,7 @@ func (d *DriverDigit) DrawCaptcha(content string) (item Item, err error) {
 	}
 	x := rand.Intn(maxx-border*2) + border
 	y := rand.Intn(maxy-border*2) + border
+	//fmt.Printf("drawDigit x: %v y: %v\n", x, y)
 	// Draw digits.
 	for _, n := range digits {
 		itemDigit.drawDigit(digitFontData[n], x, y)
